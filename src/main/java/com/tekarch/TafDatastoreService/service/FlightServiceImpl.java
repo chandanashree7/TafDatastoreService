@@ -22,7 +22,7 @@ public class FlightServiceImpl implements FlightServiceInterface {
     public List<FlightResponse> getFlights() {
         List<Flights> details = flightRepository.findAll();
         List<FlightResponse> flightResponses = new ArrayList<>();
-        for (Flights detail: details){
+        for (Flights detail : details) {
             flightResponses.add(mapFlightDetails(detail));
         }
         return flightResponses;
