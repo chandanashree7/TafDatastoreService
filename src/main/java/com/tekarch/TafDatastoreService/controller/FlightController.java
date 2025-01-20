@@ -1,8 +1,8 @@
 package com.tekarch.TafDatastoreService.controller;
 
 import com.tekarch.TafDatastoreService.entities.Flights;
-import com.tekarch.TafDatastoreService.entities.Users;
-import com.tekarch.TafDatastoreService.model.FlightDTO;
+import com.tekarch.TafDatastoreService.model.FlightRequest;
+import com.tekarch.TafDatastoreService.model.FlightResponse;
 import com.tekarch.TafDatastoreService.service.FlightServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,25 +19,25 @@ public class FlightController {
     private FlightServiceImpl flightService;
 
     @GetMapping("/flights")
-    public ResponseEntity<List<Flights>> getAllFlights() {
+    public ResponseEntity<List<FlightResponse>> getAllFlights() {
         return new ResponseEntity<>(flightService.getFlights(), HttpStatus.OK);
     }
 
     @GetMapping("/flights/{flightId}")
-    public ResponseEntity<Flights> getFlightById(@PathVariable Long flightId) {
-        Flights flight = flightService.getFlightById(flightId);
+    public ResponseEntity<FlightResponse> getFlightById(@PathVariable Long flightId) {
+        FlightResponse flight = flightService.getFlightById(flightId);
         return (flight != null) ? ResponseEntity.status(HttpStatus.OK).body(flight) : ResponseEntity.status(HttpStatus.NOT_FOUND).body(flight);
     }
 
     @PostMapping("/flights")
-    public ResponseEntity<Flights> createFlight(@RequestBody FlightDTO flight) {
-        Flights createdFlight = flightService.saveFlight(flight);
+    public ResponseEntity<FlightResponse> createFlight(@RequestBody FlightRequest flight) {
+        FlightResponse createdFlight = flightService.saveFlight(flight);
         return new ResponseEntity<>(createdFlight, HttpStatus.CREATED);
     }
 
     @PutMapping("/flights/{flightId}")
-    public ResponseEntity<Flights> updateFlight(@RequestBody FlightDTO flight,@PathVariable Long flightId) {
-        Flights updateFlight = flightService.updateFlight(flight, flightId);
+    public ResponseEntity<FlightResponse> updateFlight(@RequestBody FlightRequest flight, @PathVariable Long flightId) {
+        FlightResponse updateFlight = flightService.updateFlight(flight, flightId);
         return new ResponseEntity<>(updateFlight, HttpStatus.CREATED);
     }
 

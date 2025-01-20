@@ -1,14 +1,15 @@
 package com.tekarch.TafDatastoreService.service.Interface;
 
 import com.tekarch.TafDatastoreService.entities.Users;
-import com.tekarch.TafDatastoreService.model.UserDTO;
+import com.tekarch.TafDatastoreService.model.UserRequest;
+import com.tekarch.TafDatastoreService.model.UserResponse;
 
 import java.util.List;
 
 public interface UserServiceInterface {
 
-    Users addUser(UserDTO users);
-    List<Users> getAllUsers();
-    Users updateUser(UserDTO user, Long userId);
-    Users getUserId(Long userId);
+    UserResponse createUser(UserRequest users);
+    List<UserResponse> getAllUsers();
+    UserResponse updateUser(UserRequest user, Long userId);
+    UserResponse getUserId(Long userId);
 }

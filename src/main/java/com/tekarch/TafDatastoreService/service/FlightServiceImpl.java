@@ -1,16 +1,16 @@
 package com.tekarch.TafDatastoreService.service;
 
 import com.tekarch.TafDatastoreService.entities.Flights;
-import com.tekarch.TafDatastoreService.model.FlightDTO;
+import com.tekarch.TafDatastoreService.model.FlightRequest;
+import com.tekarch.TafDatastoreService.model.FlightResponse;
 import com.tekarch.TafDatastoreService.repository.FlightRepository;
 import com.tekarch.TafDatastoreService.service.Interface.FlightServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class FlightServiceImpl implements FlightServiceInterface {
@@ -19,17 +19,22 @@ public class FlightServiceImpl implements FlightServiceInterface {
     private FlightRepository flightRepository;
 
     @Override
-    public List<Flights> getFlights() {
-        return flightRepository.findAll();
+    public List<FlightResponse> getFlights() {
+        List<Flights> details = flightRepository.findAll();
+        List<FlightResponse> flightResponses = new ArrayList<>();
+        for (Flights detail: details){
+            flightResponses.add(mapFlightDetails(detail));
+        }
+        return flightResponses;
     }
 
     @Override
-    public Flights getFlightById(Long id) {
-        return flightRepository.findById(id).orElse(null);
+    public FlightResponse getFlightById(Long id) {
+        return mapFlightDetails(flightRepository.findById(id).orElse(null));
     }
 
     @Override
-    public Flights saveFlight(FlightDTO flight) {
+    public FlightResponse saveFlight(FlightRequest flight) {
         Flights flights = new Flights();
         flights.setFlightNumber(flight.getFlightNumber());
         flights.setArrival(flight.getArrival());
@@ -40,11 +45,11 @@ public class FlightServiceImpl implements FlightServiceInterface {
         flights.setArrivalTime(flight.getArrivalTime());
         flights.setCreatedAt(LocalDateTime.now());
 
-        return flightRepository.save(flights);
+        return mapFlightDetails(flightRepository.save(flights));
     }
 
     @Override
-    public Flights updateFlight(FlightDTO flight,Long flightId) {
+    public FlightResponse updateFlight(FlightRequest flight, Long flightId) {
         Flights flights = new Flights();
         flights.setId(flightId);
         flights.setFlightNumber(flight.getFlightNumber());
@@ -67,7 +72,7 @@ public class FlightServiceImpl implements FlightServiceInterface {
             flights.setArrivalTime(flight.getArrivalTime());
         }
         flights.setUpdatedAt(LocalDateTime.now());
-        return flightRepository.save(flights);
+        return mapFlightDetails(flightRepository.save(flights));
     }
 
     @Override
@@ -75,5 +80,18 @@ public class FlightServiceImpl implements FlightServiceInterface {
         flightRepository.deleteById(flightId);
     }
 
-
+    private FlightResponse mapFlightDetails(Flights flight){
+        FlightResponse response = new FlightResponse();
+        if(flight != null) {
+            response.setId(flight.getId());
+            response.setFlightNumber(flight.getFlightNumber());
+            response.setArrival(flight.getArrival());
+            response.setAvailableSeats(flight.getAvailableSeats());
+            response.setDeparture(flight.getDeparture());
+            response.setPrice(flight.getPrice());
+            response.setDepartureTime(flight.getDepartureTime());
+            response.setArrivalTime(flight.getArrivalTime());
+        }
+        return response;
+    }
 }
