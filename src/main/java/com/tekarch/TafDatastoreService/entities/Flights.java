@@ -34,7 +34,7 @@ public class Flights {
     private Integer price;
 
     @Column(name = "available_seats", nullable = false)
-    private int availableSeats;
+    private Integer availableSeats;
 
     @Column(name = "created_at", nullable = true)
     private LocalDateTime createdAt;

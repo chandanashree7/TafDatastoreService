@@ -100,7 +100,10 @@ public class BookingServiceImpl implements BookingServiceInterface {
         response.setArrivalTime(flights.getArrivalTime());
         response.setArrival(flights.getArrival());
         response.setDeparture(flights.getDeparture());
-        response.setAvailableSeats(flights.getAvailableSeats());
+        if (flights.getPrice() != null && flights.getPrice() > 0)
+            response.setPrice(flights.getPrice());
+        if (flights.getAvailableSeats() != null && flights.getAvailableSeats() > 0)
+            response.setAvailableSeats(flights.getAvailableSeats());
         return response;
     }
 
