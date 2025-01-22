@@ -75,6 +75,8 @@ public class BookingServiceImpl implements BookingServiceInterface {
 
     }
 
+
+
     private BookingResponse mapBookingData(Bookings output){
         BookingResponse response = new BookingResponse();
         if(output != null) {

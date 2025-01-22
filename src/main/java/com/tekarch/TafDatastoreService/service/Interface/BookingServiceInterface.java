@@ -14,4 +14,5 @@ public interface BookingServiceInterface {
     BookingResponse getBookingById(Long id);
     List<BookingResponse> getBookingByUserId(Long userId);
     BookingResponse cancelBooking(Long bookingId);
+    //BookingResponse createNewUser(BookingRequest booking);
 }

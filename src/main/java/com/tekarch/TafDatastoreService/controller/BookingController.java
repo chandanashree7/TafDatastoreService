@@ -2,9 +2,6 @@ package com.tekarch.TafDatastoreService.controller;
 
 
 
-import com.tekarch.TafDatastoreService.entities.Bookings;
-
-
 import com.tekarch.TafDatastoreService.model.BookingRequest;
 import com.tekarch.TafDatastoreService.model.BookingResponse;
 import com.tekarch.TafDatastoreService.service.BookingServiceImpl;
@@ -26,9 +23,14 @@ public class BookingController {
     @PostMapping("/bookings")
     public ResponseEntity<BookingResponse> createBooking(@RequestBody BookingRequest booking) {
         BookingResponse createdBooking = bookingService.saveBooking(booking);
-        System.out.println("Create booking: "+createdBooking);
         return new ResponseEntity<>(createdBooking, HttpStatus.CREATED);
     }
+
+    /*@PostMapping("/createbooking")
+    public ResponseEntity<BookingResponse> createNewBooking(@RequestBody BookingRequest booking) {
+        BookingResponse response = bookingService.createNewUser(booking);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }*/
 
     @GetMapping("/bookings/{bookingId}")
     public ResponseEntity<BookingResponse> getBookingById(@PathVariable Long bookingId) {
